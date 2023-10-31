@@ -1,43 +1,36 @@
-import {p1, p2, p3, p4, p5} from './Passageiros'
+export class Fly {
+    flyNumber:number;
+    from:string;
+    to:string;
+    date: Date;
+    availableSeats: number;
+    passengers: Array<Object>;
 
-class Voo {
-    numero:number;
-    origem:string;
-    destino:string;
-    data: Date;
-    assentosDisponiveis: number;
-    passageiros: Array<Object>;
+    constructor(FlyNumber: number, From:string, To:string, Date: Date, AvailableSeats:number, Passengers:Array<Object>) {
 
-    constructor(Numero: number, Origem:string, Destino:string, Data: Date, AssentosDisponiveis:number, Passageiros:Array<Object>) {
-
-        this.numero = Numero;
-        this.origem = Origem;
-        this.destino = Destino;
-        this.data = Data;
-        this.assentosDisponiveis = AssentosDisponiveis;
-        this.passageiros = Passageiros;
+        this.flyNumber = FlyNumber;
+        this.from = From;
+        this.to = To;
+        this.date = Date;
+        this.availableSeats = AvailableSeats;
+        this.passengers = Passengers;
 
     }
-    reservarAssento(reservaRecebida: Array<Object>): boolean {
-        if (reservaRecebida.length <= this.assentosDisponiveis) {
-            for (const reserva of reservaRecebida) {
-                this.passageiros.push(reserva);
+    reserveSeat(reserveReceived: Array<Object>): boolean {
+
+        if (reserveReceived.length <= this.availableSeats) {
+            for (const reserve of reserveReceived) {
+                this.passengers.push(reserve);
             }
-            this.assentosDisponiveis -= reservaRecebida.length;
+            this.availableSeats -= reserveReceived.length;
             return true;
         } else {
-            console.log(`Não há assentos suficientes, o número de assentos disponíveis é de apenas, ${this.assentosDisponiveis}`);
+            console.log(`Não há assentos suficientes, o número de assentos disponíveis é de apenas, ${this.availableSeats}`);
             return false;
         }
     }
 
-    listarPassageiros(): void{
-        console.log(this.passageiros.map((p: any) => `${p.nome}, de ${p.idade} anos de idade, portador do cpf: ${p.cpf}`).join('\n'));    
+    listPassengers(): void{
+        console.log(this.passengers.map((p: any) => `${p.name}, de ${p.age} anos de idade, portador do cpf: ${p.cpf}`).join('\n'));    
     }
 }
-
-const voo01 = new Voo(1,'São Paulo', 'Rio de Janeiro', new Date(2023, 9, 27, 6, 30), 6, []);
-
-voo01.reservarAssento([p1, p2, p3, p4, p5]);
-
-voo01.listarPassageiros();
